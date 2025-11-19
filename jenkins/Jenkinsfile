@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    tools {
-         SonarScanner 'sonar-scanner'
-    }
+    
     environment
     {
         cont_name = "app-cont"
@@ -21,19 +19,7 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh """
-                        sonar-scanner \
-                        -Dsonar.projectKey=flask-todo \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.login=$SONARQUBE_PASSWORD
-                    """
-                }
-            }
-        }
+        
          stage('docker build') {
             steps {
                 sh """ docker rm app || true
