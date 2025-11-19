@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Simple Java Maven App — UI</title>
+    <style>
+      body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:#f5f7fb;color:#0f1724;margin:0}
+      .wrap{max-width:780px;margin:6rem auto;padding:2rem;background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.08)}
+      h1{margin:0 0 0.25rem}
+      p.lead{color:#334155}
+      .msg{margin-top:1rem;padding:1rem;background:#eef2ff;border-radius:8px;color:#3730a3}
+      button{margin-top:1rem;padding:0.6rem 1rem;border:0;border-radius:8px;background:#0ea5a4;color:#fff;cursor:pointer}
+      footer{margin-top:1.5rem;color:#64748b;font-size:0.9rem}
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Simple Java Maven App</h1>
+      <p class="lead">A tiny UI served by the application. Click the button to request the hello message from the Java backend.</p>
+
+      <div>
+        <button id="btn">Get hello</button>
+        <div id="result" class="msg" aria-live="polite">(no message yet)</div>
+      </div>
+
+      <footer>Server UI — served from <code>/static/index.html</code></footer>
+    </main>
+
+    <script>
+      const btn = document.getElementById('btn');
+      const result = document.getElementById('result');
+      btn.addEventListener('click', async () => {
+        result.textContent = 'Loading...';
+        try {
+          const res = await fetch('/api/hello');
+          if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+          const text = await res.text();
+          result.textContent = text;
+        } catch (err) {
+          result.textContent = 'Request failed: ' + err.message;
+        }
+      });
+    </script>
+  </body>
+</html>
