@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment
-    {
+    { 
         cont_name = "app-cont"
         image_name = "app-image"
         version = "v1"
