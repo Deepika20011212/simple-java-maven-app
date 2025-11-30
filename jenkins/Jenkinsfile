@@ -22,7 +22,7 @@ pipeline {
         
          stage('Build Image') {
             steps {
-                sh """ docker rm app || true
+                sh """ docker rm  ${image_name} || true
                 docker build -t ${image_name}:${version} .
                 """
             }
