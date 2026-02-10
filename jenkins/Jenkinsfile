@@ -6,6 +6,7 @@ pipeline {
         image_name = "app-image"
         version = "v1"
     }
+    
     stages {
        
         stage('Build artifact') {
